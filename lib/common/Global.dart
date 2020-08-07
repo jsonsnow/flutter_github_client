@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:github_client/common/cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/index.dart';
 
@@ -16,7 +17,7 @@ class Global {
   static SharedPreferences _prefs;
   static Profile profile = Profile();
 
-  //static NetCache netCache = NetC
+  static NetCache netCache = NetCache();
 
   static List<MaterialColor> get themes => _themes;
 
