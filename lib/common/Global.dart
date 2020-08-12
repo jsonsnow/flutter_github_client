@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:github_client/common/cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/index.dart';
+import 'git.dart';
 
 const _themes = <MaterialColor>[
   Colors.blue,
@@ -21,14 +22,16 @@ class Global {
 
   static List<MaterialColor> get themes => _themes;
 
-  static bool get isRelease => bool.fromEnvironment('dart.vm.produc');
+  static bool get isRelease => bool.fromEnvironment('dart.vm.product');
 
   static Future init() async {
     _prefs = await SharedPreferences.getInstance();
     var _profile = _prefs.getString('profile');
+    print('use profile:$_profile');
     if (_profile != null) {
       try {
         profile = Profile.fromJson(jsonDecode(_profile));
+        print(profile.token);
       } catch (e) {
         print(e);
       }
@@ -37,6 +40,8 @@ class Global {
       ..enable = true
       ..maxAge = 3600
       ..maxCount = 100;
+
+    Git.init();
   }
 
   static saveProfile() =>

@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:github_client/common/Global.dart';
 import 'package:github_client/models/index.dart';
 
+import 'Global.dart';
+import 'Global.dart';
+
 class Git {
   Git([this.context]) {
     _options = Options(extra: {'context': context});
@@ -16,19 +19,20 @@ class Git {
 
   static Dio dio =
       new Dio(BaseOptions(baseUrl: 'https://api.github.com/', headers: {
-    HttpHeaders.acceptHeader: "application/vnd.github.squirrel-girl-preview,"
-        "application/vnd.github.symmetra-preview+json",
+    HttpHeaders.acceptHeader:
+        "application/vnd.github.squirrel-girl-preview,application/vnd.github.symmetra-preview+json,application/vnd.github.v3+json"
   }));
 
   static void init() {
     dio.interceptors.add(Global.netCache);
-
+    print('user token: ${Global.profile.token}');
     dio.options.headers[HttpHeaders.authorizationHeader] = Global.profile.token;
     if (!Global.isRelease) {
+      print('go no release');
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
         client.findProxy = (uri) {
-          return 'PROXY 10.1.10.250:8888';
+          return 'PROXY 10.10.11.107:8888';
         };
         client.badCertificateCallback =
             (X509Certificate cert, String host, int port) => true;
@@ -45,7 +49,7 @@ class Git {
 
     dio.options.headers[HttpHeaders.authorizationHeader] = basic;
     Global.netCache.cache.clear();
-    Global.profile.token = basic;
+    Global.profile.token = 'Basic ' + base64.encode(utf8.encode('$login:$pwd'));
     return User.fromJson(r.data);
   }
 
@@ -60,6 +64,7 @@ class Git {
       queryParameters: queryParams,
       options: _options,
     );
+    print('repo data: $r');
     return r.data.map((e) => Repo.fromJson(e)).toList();
   }
 }

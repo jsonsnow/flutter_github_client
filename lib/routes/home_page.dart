@@ -6,6 +6,8 @@ import 'package:github_client/common/git.dart';
 import 'package:github_client/models/index.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/repo_item.dart';
+
 class HomeRoute extends StatefulWidget {
   @override
   _HomeRouteState createState() {
@@ -39,7 +41,9 @@ class _HomeRouteState extends State<HomeRoute> {
           items.addAll(data);
           return data.length == 20;
         },
-        itemBuilder: (list, index, ctx) {},
+        itemBuilder: (list, index, ctx) {
+          return RepoItem(list[index]);
+        },
       );
     }
   }

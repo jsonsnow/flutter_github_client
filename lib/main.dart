@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:github_client/common/Global.dart';
+import 'package:github_client/routes/login.dart';
 import 'package:provider/provider.dart';
 
-void main() => Global.init().then((value) => runApp(MyApp()));
+import 'common/Global.dart';
+import 'routes/home_page.dart';
+
+void main() {
+  // add this, and it should be the first line in main method
+  WidgetsFlutterBinding.ensureInitialized();
+  // rest of your app code
+  Global.init().then((value) => runApp(MyApp()));
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -20,11 +29,15 @@ class MyApp extends StatelessWidget {
           onGenerateTitle: (context) {
             return "test";
           },
-          locale: local.getLocale(),
-          supportedLocales: [
-            const Locale('en', 'US'),
-            const Locale('zh', 'CN'),
-          ],
+          // locale: local.getLocale(),
+          // supportedLocales: [
+          //   const Locale('en', 'US'),
+          //   const Locale('zh', 'CN'),
+          // ],
+          routes: <String, WidgetBuilder>{
+            '/': (context) => HomeRoute(),
+            'login': (context) => LoginRoute(),
+          },
         );
       }),
     );

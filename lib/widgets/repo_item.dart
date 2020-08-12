@@ -1,8 +1,9 @@
-import 'dart:js';
+//import 'dart:js';
 
-import 'package:cached_network_image/cached_network_image.dart';
+//import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:github_client/common/funs.dart';
 import 'package:github_client/common/my_icon.dart';
 import 'package:github_client/models/index.dart';
 
@@ -73,7 +74,8 @@ class _RepoItemState extends State<RepoItem> {
                     )
                   ],
                 ),
-              )
+              ),
+              _buildBottom()
             ],
           ),
         ),
@@ -120,24 +122,4 @@ class _RepoItemState extends State<RepoItem> {
       ),
     );
   }
-}
-
-Widget gmAvatar(String url,
-    {double width = 30, double height, BoxFit fit, BorderRadius borderRadius}) {
-  var plcaeholder = Image.asset(
-    'imgs/avatar-default.png',
-    width: width,
-    height: height,
-  );
-  return ClipRRect(
-    borderRadius: borderRadius,
-    child: CachedNetworkImage(
-      imageUrl: url,
-      width: width,
-      height: height,
-      fit: fit,
-      placeholder: (context, url) => plcaeholder,
-      errorWidget: (context, url, error) => plcaeholder,
-    ),
-  );
 }
