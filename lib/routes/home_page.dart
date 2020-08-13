@@ -1,7 +1,10 @@
+import 'dart:js';
+
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:github_client/common/Global.dart';
+import 'package:github_client/common/funs.dart';
 import 'package:github_client/common/git.dart';
 import 'package:github_client/models/index.dart';
 import 'package:provider/provider.dart';
@@ -59,5 +62,34 @@ class MyDrawer extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {}
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: MediaQuery.removePadding(
+          context: context, removeTop: true, child: Column()),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Consumer<UserModel>(builder: (context, model, child) {
+      return GestureDetector(
+        child: Container(
+          child: Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: ClipOval(
+                  child: model.isLogin
+                      ? gmAvatar(model.user.avatar_url, width: 80)
+                      : Image.asset(
+                          'imgs/avatar-default.png',
+                          width: 80,
+                        ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
 }
