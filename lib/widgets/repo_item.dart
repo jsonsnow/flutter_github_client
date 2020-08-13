@@ -89,36 +89,39 @@ class _RepoItemState extends State<RepoItem> {
       data: IconThemeData(color: Colors.grey, size: 15),
       child: DefaultTextStyle(
         style: TextStyle(color: Colors.grey, fontSize: 12),
-        child: Builder(builder: (conttext) {
-          var children = <Widget>[
-            Icon(Icons.star),
-            Text(
-              ' ' +
-                  widget.repo.stargazers_count
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Builder(builder: (conttext) {
+            var children = <Widget>[
+              Icon(Icons.star),
+              Text(
+                ' ' +
+                    widget.repo.stargazers_count
+                        .toString()
+                        .padRight(paddingWidth),
+              ),
+              Icon(Icons.info_outline),
+              Text(' ' +
+                  widget.repo.open_issues_count
                       .toString()
-                      .padRight(paddingWidth),
-            ),
-            Icon(Icons.info_outline),
-            Text(' ' +
-                widget.repo.open_issues_count
-                    .toString()
-                    .padRight(paddingWidth)),
-            Icon(MyIcons.fork),
-            Text(widget.repo.forks_count.toString().padRight(paddingWidth)),
-          ];
-          if (widget.repo.fork) {
-            children.add(Text('Forked'.padRight(paddingWidth)));
-          }
-          if (widget.repo.private == true) {
-            children.addAll(<Widget>[
-              Icon(Icons.lock),
-              Text(' private'.padRight(paddingWidth))
-            ]);
-          }
-          return Row(
-            children: children,
-          );
-        }),
+                      .padRight(paddingWidth)),
+              Icon(MyIcons.fork),
+              Text(widget.repo.forks_count.toString().padRight(paddingWidth)),
+            ];
+            if (widget.repo.fork) {
+              children.add(Text('Forked'.padRight(paddingWidth)));
+            }
+            if (widget.repo.private == true) {
+              children.addAll(<Widget>[
+                Icon(Icons.lock),
+                Text(' private'.padRight(paddingWidth))
+              ]);
+            }
+            return Row(
+              children: children,
+            );
+          }),
+        ),
       ),
     );
   }
