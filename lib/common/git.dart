@@ -6,8 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:github_client/common/Global.dart';
 import 'package:github_client/models/index.dart';
-
-import 'Global.dart';
 import 'Global.dart';
 
 class Git {
@@ -31,9 +29,9 @@ class Git {
       print('go no release');
       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
-        client.findProxy = (uri) {
-          return 'PROXY 10.10.11.107:8888';
-        };
+        // client.findProxy = (uri) {
+        //   return 'PROXY 192.168.31.63:8888';
+        // };
         client.badCertificateCallback =
             (X509Certificate cert, String host, int port) => true;
       };

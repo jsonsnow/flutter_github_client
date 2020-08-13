@@ -1,4 +1,4 @@
-import 'dart:js';
+// import 'dart:js';
 
 import 'package:flukit/flukit.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +24,7 @@ class _HomeRouteState extends State<HomeRoute> {
     return Scaffold(
       appBar: AppBar(title: Text('主页')),
       body: _buildBody(),
+      drawer: MyDrawer(),
     );
   }
 
@@ -65,7 +66,17 @@ class MyDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: MediaQuery.removePadding(
-          context: context, removeTop: true, child: Column()),
+          context: context,
+          removeTop: true,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _buildHeader(),
+              Expanded(
+                child: _buildMenus(),
+              )
+            ],
+          )),
     );
   }
 
@@ -86,10 +97,71 @@ class MyDrawer extends StatelessWidget {
                         ),
                 ),
               ),
+              Text(
+                model.isLogin ? model.user.login : '登录',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              )
             ],
           ),
         ),
+        onTap: () {
+          if (!model.isLogin) {
+            Navigator.of(context).pushNamed('login');
+          }
+        },
       );
     });
+  }
+
+  Widget _buildMenus() {
+    return Consumer<UserModel>(
+      builder: (context, user, child) {
+        return ListView(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.color_lens),
+              title: Text('主题'),
+              onTap: () => Navigator.pushNamed(context, 'themes'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.language),
+              title: Text('语言'),
+              onTap: () => Navigator.pushNamed(context, "language"),
+            ),
+            if (user.isLogin)
+              ListTile(
+                leading: const Icon(Icons.power_settings_new),
+                title: Text('退出登录'),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        content: Text('退出登录'),
+                        actions: [
+                          FlatButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text('取消'),
+                          ),
+                          FlatButton(
+                            onPressed: () {
+                              user.user = null;
+                              Navigator.pop(context);
+                            },
+                            child: Text('确定'),
+                          )
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
+          ],
+        );
+      },
+    );
   }
 }
