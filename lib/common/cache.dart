@@ -24,6 +24,7 @@ class NetCache extends Interceptor {
 
   @override
   Future onRequest(RequestOptions options) async {
+    print('on request');
     if (!Global.profile.cache.enable) return options;
 
     bool refresh = options.extra['refresh'] = true;
@@ -33,6 +34,7 @@ class NetCache extends Interceptor {
       } else {
         delete(options.uri.toString());
       }
+      print('on reqeust refresh');
       return options;
     }
     if (options.extra['noCache'] != true &&
@@ -55,6 +57,7 @@ class NetCache extends Interceptor {
 
   @override
   Future onResponse(Response response) async {
+    print('on reseponse');
     if (Global.profile.cache.enable) {
       _saveCache(response);
     }

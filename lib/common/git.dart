@@ -41,7 +41,7 @@ class Git {
   }
 
   Future<User> login(String login, String pwd) async {
-    String basic = 'Basic' + base64.encode(utf8.encode('$login:$pwd'));
+    String basic = 'Basic ' + base64.encode(utf8.encode('$login:$pwd'));
     var r = await dio.get('/users/$login',
         options: _options.merge(
             headers: {HttpHeaders.authorizationHeader: basic},
@@ -49,7 +49,7 @@ class Git {
 
     dio.options.headers[HttpHeaders.authorizationHeader] = basic;
     Global.netCache.cache.clear();
-    Global.profile.token = 'Basic ' + base64.encode(utf8.encode('$login:$pwd'));
+    Global.profile.token = basic;
     return User.fromJson(r.data);
   }
 
