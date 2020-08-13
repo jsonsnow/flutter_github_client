@@ -36,10 +36,14 @@ class _HomeRouteState extends State<HomeRoute> {
     } else {
       return InfiniteListView<Repo>(
         onRetrieveData: (page, items, refresh) async {
+          print('list view start');
           var data = await Git(context).getRepos(
-              refresh: refresh, queryParams: {'page': page, 'page_size': 20});
+            refresh: refresh,
+            queryParams: {'page': page, 'page_size': 20},
+          );
+          print('list view end');
           items.addAll(data);
-          return data.length == 20;
+          return data.length > 0 && data.length % 20 == 0;
         },
         itemBuilder: (list, index, ctx) {
           return RepoItem(list[index]);
@@ -47,4 +51,13 @@ class _HomeRouteState extends State<HomeRoute> {
       );
     }
   }
+}
+
+class MyDrawer extends StatelessWidget {
+  MyDrawer({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {}
 }
