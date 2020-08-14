@@ -30,6 +30,7 @@ class NetCache extends Interceptor {
     bool refresh = options.extra['refresh'] = true;
     if (refresh) {
       if (options.extra["list"] == true) {
+        print('to list');
         cache.removeWhere((key, value) => key.contains(options.path));
       } else {
         delete(options.uri.toString());

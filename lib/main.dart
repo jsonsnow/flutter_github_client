@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:github_client/common/Global.dart';
 import 'package:github_client/routes/login.dart';
+import 'package:github_client/routes/theme_change.dart';
 import 'package:provider/provider.dart';
 
 import 'common/Global.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
           routes: <String, WidgetBuilder>{
             '/': (context) => HomeRoute(),
             'login': (context) => LoginRoute(),
+            'themes': (context) => ThemeChangeRoute()
           },
         );
       }),
