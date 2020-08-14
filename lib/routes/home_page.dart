@@ -65,18 +65,17 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: MediaQuery.removePadding(
-          context: context,
-          removeTop: true,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _buildHeader(),
-              Expanded(
-                child: _buildMenus(),
-              )
-            ],
-          )),
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _buildHeader(),
+            Expanded(
+              child: _buildMenus(),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -101,7 +100,7 @@ class MyDrawer extends StatelessWidget {
                 model.isLogin ? model.user.login : '登录',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               )
             ],

@@ -10,7 +10,7 @@ Widget gmAvatar(String url,
     height: height,
   );
   return ClipRRect(
-    borderRadius: borderRadius,
+    borderRadius: borderRadius ?? BorderRadius.circular(2),
     child: CachedNetworkImage(
       imageUrl: url,
       width: width,
