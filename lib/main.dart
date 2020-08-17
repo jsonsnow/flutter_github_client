@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:github_client/common/Global.dart';
+import 'package:github_client/l10n/localization_intl.dart';
+import 'package:github_client/routes/language.dart';
 import 'package:github_client/routes/login.dart';
 import 'package:github_client/routes/theme_change.dart';
 import 'package:provider/provider.dart';
@@ -30,15 +33,36 @@ class MyApp extends StatelessWidget {
           onGenerateTitle: (context) {
             return "test";
           },
-          // locale: local.getLocale(),
-          // supportedLocales: [
-          //   const Locale('en', 'US'),
-          //   const Locale('zh', 'CN'),
-          // ],
+          locale: local.getLocale(),
+          supportedLocales: [
+            const Locale('en', 'US'),
+            const Locale('zh', 'CN'),
+          ],
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GmLocalizationDelegate()
+          ],
+          localeListResolutionCallback: (list, supportList) {
+            if (local.getLocale() != null) {
+              return local.getLocale();
+            }
+            Locale locale;
+            list.forEach((element) {
+              if (supportList.contains(element)) {
+                locale = element;
+              }
+            });
+            if (locale == null) {
+              locale = Locale('en', 'US');
+            }
+            return locale;
+          },
           routes: <String, WidgetBuilder>{
             '/': (context) => HomeRoute(),
             'login': (context) => LoginRoute(),
-            'themes': (context) => ThemeChangeRoute()
+            'themes': (context) => ThemeChangeRoute(),
+            'language': (context) => LanguageRoute()
           },
         );
       }),

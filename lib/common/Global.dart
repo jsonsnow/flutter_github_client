@@ -96,7 +96,8 @@ class LocaleModel extends ProfileChangeNotifier {
 
   set locale(String locale) {
     if (locale != _profile.locale) {
-      _profile.locale = local;
+      print('locale update');
+      _profile.locale = locale;
       notifyListeners();
     }
   }

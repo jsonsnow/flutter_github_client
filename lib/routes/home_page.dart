@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:github_client/common/Global.dart';
 import 'package:github_client/common/funs.dart';
 import 'package:github_client/common/git.dart';
+import 'package:github_client/l10n/localization_intl.dart';
 import 'package:github_client/models/index.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +23,7 @@ class _HomeRouteState extends State<HomeRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('主页')),
+      appBar: AppBar(title: Text(GmLocalization.of(context).home)),
       body: _buildBody(),
       drawer: MyDrawer(),
     );
