@@ -22,7 +22,7 @@ class GmLocalization {
         name: 'title', desc: 'Title for them my application');
   }
 
-  String get home => Intl.message('Github', name: 'home');
+  String get home => Intl.message('主页', name: 'home');
 
   String get language => Intl.message('Language', name: 'language');
 
